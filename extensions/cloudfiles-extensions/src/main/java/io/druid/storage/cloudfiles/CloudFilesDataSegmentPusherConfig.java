@@ -17,52 +17,52 @@
 
 package io.druid.storage.cloudfiles;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
+
+import javax.validation.constraints.NotNull;
 
 /**
  */
 public class CloudFilesDataSegmentPusherConfig
 {
 
-	@JsonProperty
-	@NotNull
-	private String region;
+  @JsonProperty
+  @NotNull
+  private String region;
 
-	@JsonProperty
-	@NotNull
-	private String container;
+  @JsonProperty
+  @NotNull
+  private String container;
 
-	@JsonProperty
-	@NotNull
-	private String basePath;
+  @JsonProperty
+  @NotNull
+  private String basePath;
 
-	@JsonProperty
-	private int operationMaxRetries = 10;
+  @JsonProperty
+  private int operationMaxRetries = 10;
 
-	public String getRegion()
-	{
-		Preconditions.checkNotNull(region);
-		return region;
-	}
+  public String getRegion()
+  {
+    Preconditions.checkNotNull(region);
+    return region;
+  }
 
-	public String getContainer()
-	{
-		Preconditions.checkNotNull(container);
-		return container;
-	}
+  public String getContainer()
+  {
+    Preconditions.checkNotNull(container);
+    return container;
+  }
 
-	public String getBasePath()
-	{
-		Preconditions.checkNotNull(basePath);
-		return basePath;
-	}
+  public String getBasePath()
+  {
+    Preconditions.checkNotNull(basePath);
+    return basePath;
+  }
 
-	public int getOperationMaxRetries()
-	{
-		return operationMaxRetries;
-	}
+  public int getOperationMaxRetries()
+  {
+    return operationMaxRetries;
+  }
 
 }

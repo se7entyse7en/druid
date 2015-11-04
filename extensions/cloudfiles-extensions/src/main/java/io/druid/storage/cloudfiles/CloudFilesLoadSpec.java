@@ -31,33 +31,35 @@ import java.io.File;
 public class CloudFilesLoadSpec implements LoadSpec
 {
 
-	@JsonProperty
-	private final String region;
+  @JsonProperty
+  private final String region;
 
-	@JsonProperty
-	private final String container;
+  @JsonProperty
+  private final String container;
 
-	@JsonProperty
-	private final String path;
+  @JsonProperty
+  private final String path;
 
-	private final CloudFilesDataSegmentPuller puller;
+  private final CloudFilesDataSegmentPuller puller;
 
-	@JsonCreator
-	public CloudFilesLoadSpec(@JsonProperty("region") String region, @JsonProperty("container") String container,
-	    @JsonProperty("path") String path, @JacksonInject CloudFilesDataSegmentPuller puller)
-	{
-		Preconditions.checkNotNull(region);
-		Preconditions.checkNotNull(container);
-		Preconditions.checkNotNull(path);
-		this.container = container;
-		this.region = region;
-		this.path = path;
-		this.puller = puller;
-	}
+  @JsonCreator
+  public CloudFilesLoadSpec(
+      @JsonProperty("region") String region, @JsonProperty("container") String container,
+      @JsonProperty("path") String path, @JacksonInject CloudFilesDataSegmentPuller puller
+  )
+  {
+    Preconditions.checkNotNull(region);
+    Preconditions.checkNotNull(container);
+    Preconditions.checkNotNull(path);
+    this.container = container;
+    this.region = region;
+    this.path = path;
+    this.puller = puller;
+  }
 
-	@Override
-	public LoadSpecResult loadSegment(File file) throws SegmentLoadingException
-	{
-		return new LoadSpecResult(puller.getSegmentFiles(region, container, path, file).size());
-	}
+  @Override
+  public LoadSpecResult loadSegment(File file) throws SegmentLoadingException
+  {
+    return new LoadSpecResult(puller.getSegmentFiles(region, container, path, file).size());
+  }
 }

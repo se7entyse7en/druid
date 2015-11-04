@@ -24,36 +24,36 @@ import org.jclouds.rackspace.cloudfiles.v1.CloudFilesApi;
 
 public class CloudFilesObjectApiProxy
 {
-	private final ObjectApi objectApi;
-	private final String region;
-	private final String container;
+  private final ObjectApi objectApi;
+  private final String region;
+  private final String container;
 
-	public CloudFilesObjectApiProxy(final CloudFilesApi cloudFilesApi, final String region, final String container)
-	{
-		this.region = region;
-		this.container = container;
-		this.objectApi = cloudFilesApi.getObjectApi(region, container);
-	}
+  public CloudFilesObjectApiProxy(final CloudFilesApi cloudFilesApi, final String region, final String container)
+  {
+    this.region = region;
+    this.container = container;
+    this.objectApi = cloudFilesApi.getObjectApi(region, container);
+  }
 
-	public String getRegion()
-	{
-		return region;
-	}
+  public String getRegion()
+  {
+    return region;
+  }
 
-	public String getContainer()
-	{
-		return container;
-	}
+  public String getContainer()
+  {
+    return container;
+  }
 
-	public String put(final CloudFilesObject cloudFilesObject)
-	{
-		return objectApi.put(cloudFilesObject.getPath(), cloudFilesObject.getPayload());
-	}
+  public String put(final CloudFilesObject cloudFilesObject)
+  {
+    return objectApi.put(cloudFilesObject.getPath(), cloudFilesObject.getPayload());
+  }
 
-	public CloudFilesObject get(String path)
-	{
-		SwiftObject swiftObject = objectApi.get(path);
-		Payload payload = swiftObject.getPayload();
-		return new CloudFilesObject(payload, this.region, this.container, path);
-	}
+  public CloudFilesObject get(String path)
+  {
+    SwiftObject swiftObject = objectApi.get(path);
+    Payload payload = swiftObject.getPayload();
+    return new CloudFilesObject(payload, this.region, this.container, path);
+  }
 }

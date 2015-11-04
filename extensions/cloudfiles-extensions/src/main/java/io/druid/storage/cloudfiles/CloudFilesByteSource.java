@@ -17,52 +17,48 @@
 
 package io.druid.storage.cloudfiles;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.jclouds.io.Payload;
-
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteSource;
+import org.jclouds.io.Payload;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CloudFilesByteSource extends ByteSource
 {
 
-	final private CloudFilesObjectApiProxy objectApi;
-	final private String path;
-	private Payload payload;
+  final private CloudFilesObjectApiProxy objectApi;
+  final private String path;
+  private Payload payload;
 
-	public CloudFilesByteSource(CloudFilesObjectApiProxy objectApi, String path)
-	{
-		this.objectApi = objectApi;
-		this.path = path;
-		this.payload = null;
-	}
+  public CloudFilesByteSource(CloudFilesObjectApiProxy objectApi, String path)
+  {
+    this.objectApi = objectApi;
+    this.path = path;
+    this.payload = null;
+  }
 
-	public void closeStream() throws IOException
-	{
-		if (payload != null)
-		{
-			payload.close();
-			payload = null;
-		}
-	}
+  public void closeStream() throws IOException
+  {
+    if (payload != null) {
+      payload.close();
+      payload = null;
+    }
+  }
 
-	@Override
-	public InputStream openStream() throws IOException
-	{
-		payload = (payload == null) ? objectApi.get(path).getPayload() : payload;
+  @Override
+  public InputStream openStream() throws IOException
+  {
+    payload = (payload == null) ? objectApi.get(path).getPayload() : payload;
 
-		try
-		{
-			return payload.openStream();
-		} catch (IOException e)
-		{
-			if (CloudFilesUtils.CLOUDFILESRETRY.apply(e))
-			{
-				throw new IOException("Recoverable exception", e);
-			}
-			throw Throwables.propagate(e);
-		}
-	}
+    try {
+      return payload.openStream();
+    }
+    catch (IOException e) {
+      if (CloudFilesUtils.CLOUDFILESRETRY.apply(e)) {
+        throw new IOException("Recoverable exception", e);
+      }
+      throw Throwables.propagate(e);
+    }
+  }
 }

@@ -17,47 +17,47 @@
 
 package io.druid.storage.cloudfiles;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotNull;
 
 public class CloudFilesAccountConfig
 {
 
-	@JsonProperty
-	@NotNull
-	private String provider;
+  @JsonProperty
+  @NotNull
+  private String provider;
 
-	@JsonProperty
-	@NotNull
-	private String userName;
+  @JsonProperty
+  @NotNull
+  private String userName;
 
-	@JsonProperty
-	@NotNull
-	private String apiKey;
+  @JsonProperty
+  @NotNull
+  private String apiKey;
 
-	@JsonProperty
-	@NotNull
-	private boolean useServiceNet = true;
+  @JsonProperty
+  @NotNull
+  private boolean useServiceNet = true;
 
-	public String getProvider()
-	{
-		return provider;
-	}
+  public String getProvider()
+  {
+    return provider;
+  }
 
-	public String getUserName()
-	{
-		return userName;
-	}
+  public String getUserName()
+  {
+    return userName;
+  }
 
-	public String getApiKey()
-	{
-		return apiKey;
-	}
+  public String getApiKey()
+  {
+    return apiKey;
+  }
 
-	public boolean getUseServiceNet()
-	{
-		return useServiceNet;
-	}
+  public boolean getUseServiceNet()
+  {
+    return useServiceNet;
+  }
 
 }

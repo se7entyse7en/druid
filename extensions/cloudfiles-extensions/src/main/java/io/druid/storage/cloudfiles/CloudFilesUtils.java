@@ -17,14 +17,13 @@
 
 package io.druid.storage.cloudfiles;
 
-import java.io.IOException;
-import java.util.concurrent.Callable;
-
 import com.google.common.base.Predicate;
 import com.metamx.common.RetryUtils;
-
 import io.druid.segment.loading.DataSegmentPusherUtil;
 import io.druid.timeline.DataSegment;
+
+import java.io.IOException;
+import java.util.concurrent.Callable;
 
 /**
  *
@@ -32,50 +31,45 @@ import io.druid.timeline.DataSegment;
 public class CloudFilesUtils
 {
 
-	public static final Predicate<Throwable> CLOUDFILESRETRY = new Predicate<Throwable>()
-	{
-		@Override
-		public boolean apply(Throwable e)
-		{
-			if (e == null)
-			{
-				return false;
-			} else if (e instanceof IOException)
-			{
-				return true;
-			} else
-			{
-				return apply(e.getCause());
-			}
-		}
-	};
+  public static final Predicate<Throwable> CLOUDFILESRETRY = new Predicate<Throwable>()
+  {
+    @Override
+    public boolean apply(Throwable e)
+    {
+      if (e == null) {
+        return false;
+      } else if (e instanceof IOException) {
+        return true;
+      } else {
+        return apply(e.getCause());
+      }
+    }
+  };
 
-	/**
-	 * Retries CloudFiles operations that fail due to io-related exceptions.
-	 */
-	public static <T> T retryCloudFilesOperation(Callable<T> f, final int maxTries) throws Exception
-	{
-		return RetryUtils.retry(f, CLOUDFILESRETRY, maxTries);
-	}
+  /**
+   * Retries CloudFiles operations that fail due to io-related exceptions.
+   */
+  public static <T> T retryCloudFilesOperation(Callable<T> f, final int maxTries) throws Exception
+  {
+    return RetryUtils.retry(f, CLOUDFILESRETRY, maxTries);
+  }
 
-	public static String buildCloudFilesPath(String basePath, final String fileName)
-	{
-		String path = fileName;
-		if (!basePath.isEmpty())
-		{
-			int lastSlashIndex = basePath.lastIndexOf("/");
-			if (lastSlashIndex != -1)
-			{
-				basePath = basePath.substring(0, lastSlashIndex);
-			}
-			path = basePath + "/" + fileName;
-		}
-		return path;
-	}
+  public static String buildCloudFilesPath(String basePath, final String fileName)
+  {
+    String path = fileName;
+    if (!basePath.isEmpty()) {
+      int lastSlashIndex = basePath.lastIndexOf("/");
+      if (lastSlashIndex != -1) {
+        basePath = basePath.substring(0, lastSlashIndex);
+      }
+      path = basePath + "/" + fileName;
+    }
+    return path;
+  }
 
-	public static String buildCloudFilesPath(String basePath, final DataSegment segment)
-	{
-		return buildCloudFilesPath(basePath, DataSegmentPusherUtil.getStorageDir(segment));
-	}
+  public static String buildCloudFilesPath(String basePath, final DataSegment segment)
+  {
+    return buildCloudFilesPath(basePath, DataSegmentPusherUtil.getStorageDir(segment));
+  }
 
 }

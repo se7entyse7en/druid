@@ -17,73 +17,72 @@
 
 package io.druid.storage.cloudfiles;
 
-import java.io.File;
-
+import com.google.common.io.ByteSource;
+import com.google.common.io.Files;
 import org.jclouds.io.Payload;
 import org.jclouds.io.Payloads;
 
-import com.google.common.io.ByteSource;
-import com.google.common.io.Files;
+import java.io.File;
 
 public class CloudFilesObject
 {
 
-	private File file;
-	private Payload payload;
-	private String path;
-	private final String region;
-	private final String container;
+  private File file;
+  private Payload payload;
+  private String path;
+  private final String region;
+  private final String container;
 
-	public CloudFilesObject(final String basePath, final File file, final String region, final String container)
-	{
-		this(region, container);
-		this.file = file;
-		ByteSource byteSource = Files.asByteSource(file);
-		this.payload = Payloads.newByteSourcePayload(byteSource);
-		this.path = CloudFilesUtils.buildCloudFilesPath(basePath, file.getName());
-	}
+  public CloudFilesObject(final String basePath, final File file, final String region, final String container)
+  {
+    this(region, container);
+    this.file = file;
+    ByteSource byteSource = Files.asByteSource(file);
+    this.payload = Payloads.newByteSourcePayload(byteSource);
+    this.path = CloudFilesUtils.buildCloudFilesPath(basePath, file.getName());
+  }
 
-	public CloudFilesObject(final Payload payload, final String region, final String container, final String path)
-	{
-		this(region, container, path);
-		this.payload = payload;
-	}
+  public CloudFilesObject(final Payload payload, final String region, final String container, final String path)
+  {
+    this(region, container, path);
+    this.payload = payload;
+  }
 
-	private CloudFilesObject(final String region, final String container, final String path)
-	{
-		this(region, container);
-		this.path = path;
-	}
+  private CloudFilesObject(final String region, final String container, final String path)
+  {
+    this(region, container);
+    this.path = path;
+  }
 
-	private CloudFilesObject(final String region, final String container)
-	{
-		this.region = region;
-		this.container = container;
-	}
+  private CloudFilesObject(final String region, final String container)
+  {
+    this.region = region;
+    this.container = container;
+  }
 
-	public File getFile()
-	{
-		return file;
-	}
+  public File getFile()
+  {
+    return file;
+  }
 
-	public String getRegion()
-	{
-		return region;
-	}
+  public String getRegion()
+  {
+    return region;
+  }
 
-	public String getContainer()
-	{
-		return container;
-	}
+  public String getContainer()
+  {
+    return container;
+  }
 
-	public String getPath()
-	{
-		return path;
-	}
+  public String getPath()
+  {
+    return path;
+  }
 
-	public Payload getPayload()
-	{
-		return payload;
-	}
+  public Payload getPayload()
+  {
+    return payload;
+  }
 
 }
